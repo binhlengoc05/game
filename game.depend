@@ -1,6 +1,10 @@
 # depslib dependency file v1.0
-1745916528 source:d:\sdl\game\main.cpp
+1746389722 source:d:\sdl\game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
+	"defs.h"
+
+1746392037 d:\sdl\game\defs.h
 
