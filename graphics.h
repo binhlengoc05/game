@@ -5,6 +5,8 @@
 #include <SDL_image.h>
 #include "defs.h"
 
+void waitUntilKeyPressed();
+
 struct Graphics{
     SDL_Renderer *renderer;
     SDL_Window *window;

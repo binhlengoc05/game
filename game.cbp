@@ -32,7 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="defs.h" />
+		<Unit filename="graphics.cpp" />
+		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="mouse.cpp" />
+		<Unit filename="mouse.h" />
+		<Unit filename="picture.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
