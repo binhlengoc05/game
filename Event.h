@@ -1,9 +1,6 @@
 #ifndef _EVENT__H
 #define _EVENT__H
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include "defs.h"
 #include "graphics.h"
 
 struct Event

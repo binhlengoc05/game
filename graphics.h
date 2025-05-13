@@ -1,11 +1,11 @@
 #ifndef _GRAPHICS__H
 #define _GRAPHICS__H
 
+#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include "defs.h"
-
 
 void waitUntilKeyPressed();
 

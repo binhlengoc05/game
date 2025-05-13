@@ -99,4 +99,15 @@ void Event::keyp()
         SDL_Delay(100);
     }
 }
+    //trong hàm main
+     /*----------nghịch phím--------------------*/
+        //Event event;
+        //event.keyp();
+    /*----------nghịch mouse_pressed-----------*/
 
+    //    SDL_RenderClear(graphics.renderer);
+    //    cerr<<"event mouse, please press key:\n";
+    //    waitUntilKeyPressed();
+    //
+    //    Event event;
+    //    event.mousePress(graphics,background);
