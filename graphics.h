@@ -3,7 +3,9 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include "defs.h"
+
 
 void waitUntilKeyPressed();
 
@@ -28,5 +30,14 @@ struct Graphics{
     SDL_Texture *loadTexture(const char *filename);// tải 1 texture lên từ file hình ảnh
 
     void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y);//sao chép (blit) một phần của texture vào một vị trí cụ thể trên màn hình với kích thước gốc
+
+    //music
+    Mix_Music* loadMusic(const char* path);
+
+    void play(Mix_Music *gMusic);
+
+    Mix_Chunk* loadSound(const char* path);
+
+    void play(Mix_Chunk* gChunk);
 };
 #endif

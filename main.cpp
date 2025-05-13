@@ -5,6 +5,8 @@
 #include "defs.h"
 #include "graphics.h"
 #include "Event.h"
+#include "Map.h"
+#include "player.h"
 using namespace std;
 
 void waitUntilKeyPressed();
@@ -16,52 +18,103 @@ int main(int argc, char* argv[])
     graphics.initSDL();
     graphics.createRenderer();
 
-    SDL_Texture* background = graphics.loadTexture("background 2.jpg");
+/*---------chạy nhạc--------------------*/
+    Mix_Music *gMusic = graphics.loadMusic("song.mp3");
+    graphics.play(gMusic);
+/*---------đọc map từ file------------*/
+    Block** blocks=new Block* [MAP_HEIGHT];
+    for(int i=0;i<MAP_HEIGHT;i++) blocks[i]=new Block [MAP_WIDTH];
+    if (!loadMap("map.txt", blocks)) {
+        cout << "Failed to load map!" << endl;
+        graphics.quitSDL();
+        return 1;
+    }
+/*---------vẽ nền-----------------------*/
+    SDL_Texture* background = graphics.loadTexture("background 1.jpg");
     graphics.prepareScene(background);
     graphics.presentScene();
 
     waitUntilKeyPressed();
+/*---------khởi tạo nhân vật------------------*/
+    // Khởi tạo nhân vật
+    Player player;
 
-    SDL_Texture* player=graphics.loadTexture("man run1.png");
-    // cần sửa tiếp
+    SDL_Texture* player1=graphics.loadTexture("man run1.png");
 
     SDL_Rect playerRect;//khung hình chữ nhật của player
-    SDL_QueryTexture(player, NULL, NULL, &playerRect.w, &playerRect.h);// cho playerRect lưu texture player theo chieu rong va cao vao playerRect.w/h
+    SDL_QueryTexture(player1, NULL, NULL, &playerRect.w, &playerRect.h);// cho playerRect lưu texture player theo chieu rong va cao vao playerRect.w/h
 
-/*---------khởi tạo nhân vật------------------*/
-    SDL_Rect playerSrc={playerRect.w/4*0 , 0 , playerRect.w/4 , playerRect.h};
- /*hàm trên tương đương*/
-//    playerSrc.x=playerRect.w/4.0*3.0;// cột - lấy ảnh thứ tư của hình man run2 với kích thước rộng playerSrc.w
-//    playerSrc.y=0;//hàng
-//    playerSrc.w=playerRect.w/4.0;
-//    playerSrc.h=playerRect.h;
-
-    playerRect={0 , 0 , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 };
-//    playerRect.x=0;
-//    playerRect.y=0;
-//    playerRect.w=SCREEN_WIDTH/19.0; // giảm độ rộng thực tế đi 19 lần, nếu ko có hàm này kích thước bằng ảnh gốc
-//    playerRect.h=SCREEN_HEIGHT/11.0;
-//
-//    SDL_RenderCopy(graphics.renderer,player,NULL,&playerRect);// trường hợp lấy toàn bộ ảnh player
-    SDL_RenderCopy(graphics.renderer,player,&playerSrc,&playerRect);
+    SDL_Rect playerSrc={playerRect.w/4*0 , 0 , playerRect.w/4 , playerRect.h};//x,y,w,h
+    playerRect={0 , 0 , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 };//x,y,w,h
+    SDL_RenderCopy(graphics.renderer,player1,&playerSrc,&playerRect);
 
     graphics.presentScene();
 
 //    SDL_Texture* player=graphics.loadTexture("man run.png");
 //    graphics.renderTexture(player,70,70);
 //    graphics.presentScene();
+/*----------nghịch phím--------------------*/
+    //Event event;
+    //event.keyp();
+/*----------nghịch mouse_pressed-----------*/
 
-    cerr<<"event mouse, please press key:\n";
-    waitUntilKeyPressed();
+//    SDL_RenderClear(graphics.renderer);
+//    cerr<<"event mouse, please press key:\n";
+//    waitUntilKeyPressed();
+//
+//    Event event;
+//    event.mousePress(graphics,background);
+/*--------run game-----------------*/
 
-    Event event;
-    event.mousePress(graphics);
+    // Bắt đầu từ đáy bản đồ
+    float cameraOffsetY = MAP_HEIGHT * TILE_SIZE - SCREEN_HEIGHT;
+    float scrollSpeed = 50.0f;
+    Uint32 lastTick = SDL_GetTicks();
 
+    bool quit = false;
+    SDL_Event event;
+    while (!quit) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) quit = true;
+            handleInput(event, player);
+        }
 
+        Uint32 currentTick = SDL_GetTicks();
+        float deltaTime = (currentTick - lastTick) / 1000.0f;
+        lastTick = currentTick;
+
+        // Cập nhật camera
+        cameraOffsetY -= scrollSpeed * deltaTime;
+        if (cameraOffsetY < 0) cameraOffsetY = 0;
+
+        // Cập nhật nhân vật
+        updatePlayer(player, blocks, deltaTime, cameraOffsetY, scrollSpeed);
+
+        // Kiểm tra thua game
+        if (isGameOver(player, cameraOffsetY)) {
+            cout << "Game Over!" << endl;
+            quit = true;
+        }
+
+        drawMap(graphics,blocks,cameraOffsetY);
+
+        // Vẽ nhân vật
+        drawPlayer(player,graphics,cameraOffsetY);
+
+        graphics.presentScene();
+        SDL_Delay(16); // ~60 FPS
+    }
+
+/*-----giải phóng window,rendered,....----------*/
     SDL_DestroyTexture( background );
     background = NULL;
-    SDL_DestroyTexture( player );
-    player = NULL;
+    SDL_DestroyTexture( player1 );
+    player1 = NULL;
+
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+        delete[] blocks[MAP_WIDTH];
+    }
+    delete[] blocks;
 
     graphics.quitSDL();
     return 0;

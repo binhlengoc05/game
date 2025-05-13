@@ -9,7 +9,7 @@
 struct Event
 {
     void mouse();
-    void mousePress(Graphics &graphics);
+    void mousePress(Graphics &graphics,SDL_Texture* background=NULL);
     void keyp();
 };
 

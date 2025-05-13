@@ -1,6 +1,7 @@
     #include <iostream>
     #include <SDL.h>
     #include <SDL_image.h>
+    #include <SDL_mixer.h>
     #include "defs.h"
     #include "graphics.h"
 
@@ -35,7 +36,11 @@
 
         if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))
             logErrorAndExit( "SDL_image error:", IMG_GetError());
-
+        if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+        {
+            logErrorAndExit( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        }
+//        Mix_Init(MIX_INIT_MP3);
     }
 
 
@@ -55,6 +60,7 @@
 
     void Graphics::quitSDL()
     {
+        Mix_Quit();
         IMG_Quit();
 
         SDL_DestroyRenderer(renderer);
@@ -73,7 +79,7 @@
         SDL_RenderPresent(renderer);
     }
 
-
+    //texture
     void Graphics::renderTexture(SDL_Texture *texture, int x, int y,int width,int height)
     {
         SDL_Rect dest;
@@ -115,3 +121,40 @@
 
         SDL_RenderCopy(renderer, texture, src, &dest);
     }
+
+    //Music
+    Mix_Music* Graphics::loadMusic(const char* path)
+    {
+        Mix_Music *gMusic = Mix_LoadMUS(path);
+        if (gMusic == nullptr) {
+            SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+                           "Could not load music! SDL_mixer Error: %s", Mix_GetError());
+        }
+        return gMusic;
+    }
+    void Graphics::play(Mix_Music *gMusic)
+    {
+        if (gMusic == nullptr) return;
+
+        if (Mix_PlayingMusic() == 0) {
+            Mix_PlayMusic( gMusic, -1 );
+        }
+        else if( Mix_PausedMusic() == 1 ) {
+            Mix_ResumeMusic();// tiếp tục phát
+        }
+    }
+
+    Mix_Chunk* Graphics::loadSound(const char* path) {
+        Mix_Chunk* gChunk = Mix_LoadWAV(path);
+        if (gChunk == nullptr) {
+            SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+                       "Could not load sound! SDL_mixer Error: %s", Mix_GetError());
+        }
+        return gChunk;
+    }
+    void Graphics::play(Mix_Chunk* gChunk) {
+        if (gChunk != nullptr) {
+            Mix_PlayChannel( -1, gChunk, 0 );
+        }
+    }
+

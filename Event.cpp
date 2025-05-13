@@ -32,7 +32,7 @@ void Event::mouse()
     }
 }
 
-void Event::mousePress(Graphics &graphics)
+void Event::mousePress(Graphics &graphics,SDL_Texture* background)
 {
     SDL_Texture* player=nullptr;
     SDL_Rect playerRect;
@@ -62,9 +62,11 @@ void Event::mousePress(Graphics &graphics)
                  break;
             case SDL_MOUSEBUTTONDOWN:
                  cerr << "Down at (" << x << ", " << y << ")\n";
-                 playerRect={x , y , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 };
+                 graphics.prepareScene(background);
+                 playerRect={x , y , SCREEN_WIDTH/19-5 , SCREEN_HEIGHT/11-5 };
                  SDL_RenderCopy(graphics.renderer,player,&playerSrc,&playerRect);
                  graphics.presentScene();
+
                  break;
             case SDL_MOUSEBUTTONUP:
                  cerr << "Up at (" << x << ", " << y << ")\n";
@@ -77,6 +79,24 @@ void Event::mousePress(Graphics &graphics)
 
 void Event::keyp()
 {
+    bool quit = false;
+    SDL_Event event;
+    while (!quit) {
+        //Handle events on queue
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) quit = true;
+        }
 
+        const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+
+        if (currentKeyStates[SDL_SCANCODE_UP] ) cerr << " Up";
+        if (currentKeyStates[SDL_SCANCODE_DOWN] ) cerr << " Down";
+        if (currentKeyStates[SDL_SCANCODE_LEFT] ) cerr << " Left";
+        if (currentKeyStates[SDL_SCANCODE_RIGHT] ) cerr << " Right";
+        if (currentKeyStates[SDL_SCANCODE_ESCAPE] ) exit(0);
+        cerr << ".\n";
+
+        SDL_Delay(100);
+    }
 }
 
