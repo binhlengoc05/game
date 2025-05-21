@@ -19,8 +19,10 @@ int main(int argc, char* argv[])
     graphics.createRenderer();
 
 /*---------chạy nhạc--------------------*/
-//    Mix_Music *gMusic = graphics.loadMusic("music/song.mp3");
-//     graphics.play(gMusic);
+    Mix_Music *gMusic = graphics.loadMusic("music/awesomeness.wav");
+     graphics.play(gMusic);
+    Mix_Chunk *gJump = graphics.loadSound("music/jump.mp3");
+
 /*---------đọc map từ file------------*/
     Block** blocks=new Block* [MAP_HEIGHT];
     for(int i=0;i<MAP_HEIGHT;i++) blocks[i]=new Block [MAP_WIDTH];
@@ -35,14 +37,21 @@ int main(int argc, char* argv[])
     }
 /*---------vẽ nền-----------------------*/
 
-        SDL_Texture* background = graphics.loadTexture("background 2.jpg");
+        SDL_Texture* background = graphics.loadTexture("background test.png");
         graphics.prepareScene(background);
         graphics.presentScene();
 
         waitUntilKeyPressed();
+
+        background = graphics.loadTexture("background 2.jpg");
+        graphics.prepareScene(background);
+        graphics.presentScene();
+//        Event event1;
+//        event1.mousePress(graphics);
+//        waitUntilKeyPressed();
 /*---------khởi tạo nhân vật------------------*/
         Player player;
-        player.man(graphics);
+        player.baby(graphics);
         waitUntilKeyPressed();
 /*--------run game-----------------*/
         // Bắt đầu từ đáy bản đồ
@@ -55,7 +64,7 @@ int main(int argc, char* argv[])
         while (!quit) {
             while (SDL_PollEvent(&event)) {
                 if (event.type == SDL_QUIT) quit = true;
-                handleInput(event, player, blocks);
+                handleInput(event, player, blocks, gJump, graphics);
             }
 
             Uint32 currentTick = SDL_GetTicks();
@@ -67,7 +76,7 @@ int main(int argc, char* argv[])
             if (cameraOffsetY < 0) cameraOffsetY = 0;
 
             // Cập nhật nhân vật
-            updatePlayer(player, blocks, deltaTime, cameraOffsetY, scrollSpeed);
+            updatePlayer(player, blocks, deltaTime, cameraOffsetY, scrollSpeed, graphics);
 
             // Kiểm tra thua game
             if (isGameOver(player, cameraOffsetY)) {

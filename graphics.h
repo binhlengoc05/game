@@ -27,6 +27,8 @@ struct Graphics{
 
     void renderTexture(SDL_Texture *texture, int x, int y,int width=0,int height=0);// vẽ 1 texture lên màn hình tại vị trí (x,y) với kích thước width và height
 
+    void renderTexture(SDL_Texture *texture,SDL_Rect rect, SDL_Rect src);
+
     SDL_Texture *loadTexture(const char *filename);// tải 1 texture lên từ file hình ảnh
 
     void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y);//sao chép (blit) một phần của texture vào một vị trí cụ thể trên màn hình với kích thước gốc

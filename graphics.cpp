@@ -94,6 +94,11 @@
         SDL_RenderCopy(renderer, texture, NULL, &dest);
     }
 
+    void Graphics::renderTexture(SDL_Texture *texture,SDL_Rect rect, SDL_Rect src)
+    {
+        SDL_RenderCopy(renderer,texture,&src,&rect);
+    }
+
     SDL_Texture* Graphics::loadTexture(const char *filename)
     {
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);

@@ -4,6 +4,7 @@
 Block::Block(){
     value = 0;
     rect = {0,0,0,0};
+    isDraw= false;
     texture = nullptr;
 }
 
@@ -27,19 +28,39 @@ bool loadMap(const string& filename, Block** blocks) {
             b.value = 0; // Mặc định là không có khối
             if (line[col] == '1') {
                 b.value = 1;
+                b.isDraw = true;
                 b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE };
             }
             else if (line[col] == '3') {
                 b.value = 3;
+                b.isDraw = true;
                 b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE-5, TILE_SIZE };
             }
             else if (line[col] == '2') {
                 b.value = 2;
+                b.isDraw = true;
                 b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE/2 };
             }
             else if (line[col] == '4') {
                 b.value = 4;
+                b.isDraw = true;
                 b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE/2 };
+            }
+            else if (line[col] == 'b') {
+                b.value = NUMBER_BOY;
+                b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+            }
+            else if (line[col] == 'm') {
+                b.value = NUMBER_MAN;
+                b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+            }
+            else if (line[col] == 'o') {
+                b.value = NUMBER_OLD;
+                b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+            }
+            else if (line[col] == 'e') {
+                b.value = NUMBER_END;
+                b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE };
             }
         }
         row++;
@@ -69,14 +90,15 @@ void drawMap(Graphics &graphics,Block **blocks,float cameraOffsetY){
                         SDL_RenderFillRect(graphics.renderer, &drawRect);
                     }
                     else if (block.value == 3) { // thang leo
-                        SDL_SetRenderDrawColor(graphics.renderer, 0, 0, 255, 255); // Blue
+                        SDL_SetRenderDrawColor(graphics.renderer, 255, 255, 255, 255); // white
+                        //SDL_SetRenderDrawColor(graphics.renderer, 0, 0, 255, 255); // Blue
                         SDL_RenderFillRect(graphics.renderer, &drawRect);
                     }
                     else if (block.value == 4) { // bậc thang
                         SDL_SetRenderDrawColor(graphics.renderer, 255, 255, 200, 255); //yellow
                         SDL_RenderFillRect(graphics.renderer, &drawRect);
                     }
-                    else { // Khối thường
+                    else if (block.value == 1) { // Khối thường
                         SDL_SetRenderDrawColor(graphics.renderer, 255, 255, 255, 255); // White
                         SDL_RenderFillRect(graphics.renderer, &drawRect);
                     }

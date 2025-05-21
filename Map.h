@@ -9,6 +9,7 @@ using namespace std;
 struct Block {
     int value;
     SDL_Rect rect;
+    bool isDraw;
     SDL_Texture* texture;
     Block();
     ~Block();

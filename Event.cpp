@@ -34,19 +34,11 @@ void Event::mouse()
 
 void Event::mousePress(Graphics &graphics,SDL_Texture* background)
 {
-    SDL_Texture* player=nullptr;
-    SDL_Rect playerRect;
-    SDL_Rect playerSrc;
-    player=graphics.loadTexture("man run1.png");
-    SDL_QueryTexture(player, NULL, NULL, &playerRect.w, &playerRect.h);
-    playerSrc={0 , 0 , playerRect.w/4 , playerRect.h};
-    playerRect={0 , 0 , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 };
-
     int x,y;
     SDL_Event event;
     while (true) {
         SDL_GetMouseState(&x, &y);
-
+        cerr << x << ", " << y << endl;
         SDL_PollEvent(&event);
         switch (event.type) {
             case SDL_KEYDOWN:
@@ -63,8 +55,6 @@ void Event::mousePress(Graphics &graphics,SDL_Texture* background)
             case SDL_MOUSEBUTTONDOWN:
                  cerr << "Down at (" << x << ", " << y << ")\n";
                  graphics.prepareScene(background);
-                 playerRect={x , y , SCREEN_WIDTH/19-5 , SCREEN_HEIGHT/11-5 };
-                 SDL_RenderCopy(graphics.renderer,player,&playerSrc,&playerRect);
                  graphics.presentScene();
 
                  break;
