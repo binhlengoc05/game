@@ -7,8 +7,11 @@
 using namespace std;
 
 struct Block {
-    int value = 0;
+    int value;
     SDL_Rect rect;
+    SDL_Texture* texture;
+    Block();
+    ~Block();
 };
 
 //read map from file

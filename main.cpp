@@ -19,13 +19,17 @@ int main(int argc, char* argv[])
     graphics.createRenderer();
 
 /*---------chạy nhạc--------------------*/
-    Mix_Music *gMusic = graphics.loadMusic("song.mp3");
-    graphics.play(gMusic);
+//    Mix_Music *gMusic = graphics.loadMusic("music/song.mp3");
+//     graphics.play(gMusic);
 /*---------đọc map từ file------------*/
     Block** blocks=new Block* [MAP_HEIGHT];
     for(int i=0;i<MAP_HEIGHT;i++) blocks[i]=new Block [MAP_WIDTH];
     if (!loadMap("map.txt", blocks)) {
         cout << "Failed to load map!" << endl;
+        for (int i = 0; i < MAP_HEIGHT; i++) {
+            delete[] blocks[i];
+        }
+        delete[] blocks;
         graphics.quitSDL();
         return 1;
     }
@@ -38,7 +42,7 @@ int main(int argc, char* argv[])
         waitUntilKeyPressed();
 /*---------khởi tạo nhân vật------------------*/
         Player player;
-        player.loadPicture(graphics);
+        player.man(graphics);
         waitUntilKeyPressed();
 /*--------run game-----------------*/
         // Bắt đầu từ đáy bản đồ
@@ -51,7 +55,7 @@ int main(int argc, char* argv[])
         while (!quit) {
             while (SDL_PollEvent(&event)) {
                 if (event.type == SDL_QUIT) quit = true;
-                handleInput(event, player);
+                handleInput(event, player, blocks);
             }
 
             Uint32 currentTick = SDL_GetTicks();
@@ -87,7 +91,7 @@ int main(int argc, char* argv[])
 //    player1 = NULL;
 
     for (int i = 0; i < MAP_HEIGHT; i++) {
-        delete[] blocks[MAP_WIDTH];
+        delete[] blocks[i];
     }
     delete[] blocks;
 

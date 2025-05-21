@@ -5,10 +5,10 @@ bool isGameOver(Player& player, float cameraOffsetY) {
     return (player.y - cameraOffsetY > SCREEN_HEIGHT + 100);
 }
 
-void handleInput(SDL_Event& event, Player& player) {
+void handleInput(SDL_Event& event, Player& player, Block** blocks) {
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_SPACE && !player.is_jumping) {
-            player.vy = -500.0f; // Lực nhảy -600
+            player.vy = -player.Fjump; // Lực nhảy -600
             player.is_jumping = true;
         }
     }
@@ -26,8 +26,8 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
     // Di chuyển ngang
     const Uint8* keys = SDL_GetKeyboardState(NULL);
     player.vx = 0;
-    if (keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT]) player.vx = -200.0f;//300
-    if (keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT]) player.vx = 200.0f;//300
+    if (keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT]) player.vx = - player.Fmove;//300
+    if (keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT]) player.vx = player.Fmove;//300
     newX = player.x + player.vx * deltaTime;
 
     // Xử lý va chạm theo bốn góc
@@ -62,8 +62,8 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
 
             // Va chạm dọc: Kiểm tra góc bottom-left và bottom-right khi rơi xuống
             if (player.vy >= 0 &&
-                (bottomLeftY > blockTop && player.y + player.rect.h <= blockTop ||
-                 bottomRightY > blockTop && player.y + player.rect.h <= blockTop) &&
+                ((bottomLeftY > blockTop && player.y + player.rect.h <= blockTop) ||
+                 (bottomRightY > blockTop && player.y + player.rect.h <= blockTop)) &&
                 bottomLeftX < blockRight && bottomRightX > blockLeft) {
                 newY = blockTop - player.rect.h; // Đặt nhân vật trên khối
                 player.vy = 0;
@@ -72,8 +72,8 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
             }
             // Va chạm dọc: Kiểm tra góc top-left và top-right khi nhảy lên
             else if (player.vy < 0 &&
-                     (topLeftY < blockBottom && player.y >= blockBottom ||
-                      topRightY < blockBottom && player.y >= blockBottom) &&
+                     ((topLeftY < blockBottom && player.y >= blockBottom) ||
+                      (topRightY < blockBottom && player.y >= blockBottom)) &&
                      topLeftX < blockRight && topRightX > blockLeft
                      &&block.value!=4//muốn nhảy lên qua được block có value =4
                      ) {
@@ -83,8 +83,8 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
 
             // Va chạm ngang: Kiểm tra góc top-right và bottom-right khi di chuyển phải
             if (player.vx > 0 &&
-                (topRightX > blockLeft && player.x + player.rect.w <= blockLeft ||
-                 bottomRightX > blockLeft && player.x + player.rect.w <= blockLeft) &&
+                ((topRightX > blockLeft && player.x + player.rect.w <= blockLeft) ||
+                 (bottomRightX > blockLeft && player.x + player.rect.w <= blockLeft)) &&
                 topRightY < blockBottom && bottomRightY > blockTop
                 &&block.value!=4//muốn nhảy ngang được block có value =4
                 ) {
@@ -93,10 +93,10 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
             }
             // Va chạm ngang: Kiểm tra góc top-left và bottom-left khi di chuyển trái
             else if (player.vx < 0 &&
-                     (topLeftX < blockRight && player.x >= blockRight ||
-                      bottomLeftX < blockRight && player.x >= blockRight) &&
+                     ((topLeftX < blockRight && player.x >= blockRight) ||
+                      (bottomLeftX < blockRight && player.x >= blockRight)) &&
                      topLeftY < blockBottom && bottomLeftY > blockTop
-                     &&block.value!=4//muốn nhảy nang qua được block có value =4
+                     &&block.value!=4//muốn nhảy ngang qua được block có value =4
                      ) {
                 newX = blockRight; // Đặt nhân vật sát cạnh phải khối
                 player.vx = 0;

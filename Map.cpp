@@ -1,6 +1,19 @@
 #include "Map.h"
 #include <fstream>
 
+Block::Block(){
+    value = 0;
+    rect = {0,0,0,0};
+    texture = nullptr;
+}
+
+Block::~Block() {
+    if (texture != nullptr) {
+        SDL_DestroyTexture(texture);
+        texture = nullptr; // Đặt lại về nullptr để an toàn
+    }
+}
+
 //read map from file
 bool loadMap(const string& filename, Block** blocks) {
     ifstream file(filename);
@@ -9,7 +22,7 @@ bool loadMap(const string& filename, Block** blocks) {
     string line;
     int row = 0;
     while (getline(file, line)) {
-        for (int col = 0; col < line.length() && col < MAP_WIDTH; ++col) {
+        for (int col = 0; col < line.length() && col < MAP_WIDTH; col++) {
             Block& b = blocks[row][col];
             b.value = 0; // Mặc định là không có khối
             if (line[col] == '1') {
@@ -29,7 +42,7 @@ bool loadMap(const string& filename, Block** blocks) {
                 b.rect = { col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE/2 };
             }
         }
-        ++row;
+        row++;
         if (row == MAP_HEIGHT) break;
     }
     file.close();
