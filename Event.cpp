@@ -71,7 +71,7 @@ void StartBackground(Graphics& graphics, int currentScreen, SDL_Event event_mous
         SDL_Delay(10);
     }
 }
-void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame){
+void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame, bool& running_game){
     bool running = true;
 
     while (running) {
@@ -82,7 +82,7 @@ void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame){
         int w, h;
         SDL_QueryTexture(endgame.kexit, nullptr, nullptr, &w, &h);
         endgame.kexit_src.x = isMouseInsideRect(mouseX, mouseY, endgame.kexit_rect) ? w / 2 : 0;
-        SDL_QueryTexture(endgame.kexit, nullptr, nullptr, &w, &h);
+        SDL_QueryTexture(endgame.kback, nullptr, nullptr, &w, &h);
         endgame.kback_src.x = isMouseInsideRect(mouseX, mouseY, endgame.kback_rect) ? w / 2 : 0;
         // Handle events
         while (SDL_PollEvent(&event_mouse)) {
@@ -96,16 +96,15 @@ void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame){
                        if (isMouseInsideRect(mouseX, mouseY, endgame.kexit_rect)) {
                                 cerr << "Exit button clicked!" << endl;
                                 running = false;
-                                cerr << "Quit game!" << endl;
-                                exit(0);
+                                running_game = false;
                                 break;
                             }
-                        }
                         else if (isMouseInsideRect(mouseX, mouseY, endgame.kback_rect)) {
-                                cerr << "Back button clicked!" << endl;
+                                cerr << "play again button clicked!" << endl;
                                 running = false;
                                 break;
                         }
+                    }
             }
         }
         endgame.render(graphics);

@@ -60,7 +60,7 @@ void handleInput(SDL_Event& event, Player& player, Block** blocks, Mix_Chunk *gJ
     }
 }
 
-void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraOffsetY, float scrollSpeed,Graphics &graphics) {
+void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraOffsetY, float scrollSpeed,Graphics &graphics, bool& quit) {
         // Áp dụng trọng lực
     const float gravity = 666.0f;//800
     player.vy += gravity * deltaTime;
@@ -169,6 +169,9 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
         else if (blockValue == NUMBER_OLD && !player.isOld) {
             player.isOld = true;
             player.old(graphics);
+        }
+        else if(blockValue == NUMBER_END){
+            quit=true;
         }
     }
     // Nếu đứng trên khối, di chuyển lên theo map

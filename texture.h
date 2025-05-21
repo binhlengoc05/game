@@ -100,9 +100,9 @@ struct Endgame{
     void init(Graphics& graphics){
         background = graphics.loadTexture("endgame.png");
         kexit = graphics.loadTexture("key/exit.png");
-        kback = graphics.loadTexture("key/back.png");
-        kexit_rect = {TILE_SIZE *14, TILE_SIZE *4, TILE_SIZE*4 , TILE_SIZE *2};
-        kback_rect = {TILE_SIZE *14, TILE_SIZE *7, TILE_SIZE *4, TILE_SIZE *2};
+        kback = graphics.loadTexture("key/again.png");
+        kexit_rect = {TILE_SIZE *14, TILE_SIZE *7, TILE_SIZE*4, TILE_SIZE *2};
+        kback_rect = {TILE_SIZE *14, TILE_SIZE *4, TILE_SIZE*4, TILE_SIZE *2};
 
         int w, h;
         SDL_QueryTexture(kexit, nullptr, nullptr, &w, &h);

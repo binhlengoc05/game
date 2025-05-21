@@ -30,7 +30,7 @@ bool isGameOver(Player& player, float cameraOffsetY);
 
 void handleInput(SDL_Event& event, Player& player,Block** blocks, Mix_Chunk *gJump, Graphics& graphics);
 
-void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraOffsetY, float scrollSpeed, Graphics &graphics);
+void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraOffsetY, float scrollSpeed, Graphics &graphics, bool& quit);
 
 void drawPlayer(Player player,Graphics &graphics,float cameraOffsetY);
 

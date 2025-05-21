@@ -9,7 +9,7 @@
 bool isMouseInsideRect(int mouseX, int mouseY, SDL_Rect rect);
 
 void StartBackground(Graphics& graphics, int currentScreen, SDL_Event event_mouse, Start start, Tutorial tutorial);
-void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame);
+void EndBackground(Graphics& graphics, SDL_Event event_mouse, Endgame endgame, bool& running_game);
 
 #endif // _EVENT__H
 
