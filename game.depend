@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1747856858 source:d:\sdl\game\main.cpp
+1747867997 source:d:\sdl\game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -9,6 +9,7 @@
 	"Event.h"
 	"Map.h"
 	"player.h"
+	"texture.h"
 
 1747857219 d:\sdl\game\defs.h
 
@@ -29,16 +30,16 @@
 	<SDL.h>
 	<iostream>
 
-1747856812 source:d:\sdl\game\event.cpp
+1747868417 source:d:\sdl\game\event.cpp
 	"Event.h"
 	<SDL.h>
 	<iostream>
-	"graphics.h"
 
-1747132022 d:\sdl\game\event.h
+1747867997 d:\sdl\game\event.h
 	"graphics.h"
+	"texture.h"
 
-1747856771 source:d:\sdl\game\map.cpp
+1747857601 source:d:\sdl\game\map.cpp
 	"Map.h"
 	<fstream>
 
@@ -47,9 +48,12 @@
 	"graphics.h"
 	"defs.h"
 
-1747850953 d:\sdl\game\player.h
+1747866466 d:\sdl\game\player.h
 	"Map.h"
 
-1747857548 source:d:\sdl\game\player.cpp
+1747866566 source:d:\sdl\game\player.cpp
 	"player.h"
+
+1747867821 d:\sdl\game\texture.h
+	"graphics.h"
 
