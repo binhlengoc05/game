@@ -1,16 +1,55 @@
 # depslib dependency file v1.0
-1746397769 source:d:\sdl\game\main.cpp
+1747856858 source:d:\sdl\game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	"defs.h"
 	"graphics.h"
+	"Event.h"
+	"Map.h"
+	"player.h"
 
-1746392048 d:\sdl\game\defs.h
+1747857219 d:\sdl\game\defs.h
 
-1746398350 d:\sdl\game\graphics.h
+1747856794 d:\sdl\game\graphics.h
+	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	"defs.h"
+
+1747856827 source:d:\sdl\game\graphics.cpp
+	"graphics.h"
+
+1746554772 d:\sdl\game\mouse.h
+
+1746555096 source:d:\sdl\game\mouse.cpp
+	"mouse.h"
+	<SDL.h>
+	<iostream>
+
+1747856812 source:d:\sdl\game\event.cpp
+	"Event.h"
+	<SDL.h>
+	<iostream>
+	"graphics.h"
+
+1747132022 d:\sdl\game\event.h
+	"graphics.h"
+
+1747856771 source:d:\sdl\game\map.cpp
+	"Map.h"
+	<fstream>
+
+1747857578 d:\sdl\game\map.h
+	<string>
+	"graphics.h"
+	"defs.h"
+
+1747850953 d:\sdl\game\player.h
+	"Map.h"
+
+1747857548 source:d:\sdl\game\player.cpp
+	"player.h"
 
