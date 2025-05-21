@@ -7,6 +7,7 @@
 #include "Event.h"
 #include "Map.h"
 #include "player.h"
+#include "texture.h"
 using namespace std;
 
 void waitUntilKeyPressed();
@@ -17,7 +18,6 @@ int main(int argc, char* argv[])
     Graphics graphics;
     graphics.initSDL();
     graphics.createRenderer();
-
 /*---------chạy nhạc--------------------*/
     Mix_Music *gMusic = graphics.loadMusic("music/awesomeness.wav");
      graphics.play(gMusic);
@@ -35,25 +35,27 @@ int main(int argc, char* argv[])
         graphics.quitSDL();
         return 1;
     }
-/*---------vẽ nền-----------------------*/
+/*----- khởi tạo phần background --------*/
+    Start start;
+    Tutorial tutorial;
+    Endgame endgame;
 
-        SDL_Texture* background = graphics.loadTexture("background test.png");
-        graphics.prepareScene(background);
-        graphics.presentScene();
+    start.init(graphics);
+    tutorial.init(graphics);
+    endgame.init(graphics);
 
-        waitUntilKeyPressed();
+//  current screen: 0 = Start, 1 = Tutorial, 2 = Endgame
+    int currentScreen = 0;
+    SDL_Event event_mouse;
+    StartBackground(graphics, currentScreen, event_mouse, start, tutorial);
 
-        background = graphics.loadTexture("background 2.jpg");
-        graphics.prepareScene(background);
-        graphics.presentScene();
-//        Event event1;
-//        event1.mousePress(graphics);
-//        waitUntilKeyPressed();
 /*---------khởi tạo nhân vật------------------*/
+
         Player player;
         player.baby(graphics);
-        waitUntilKeyPressed();
+
 /*--------run game-----------------*/
+
         // Bắt đầu từ đáy bản đồ
         float cameraOffsetY = MAP_HEIGHT * TILE_SIZE - SCREEN_HEIGHT;
         float scrollSpeed = 50.0f;
@@ -94,8 +96,6 @@ int main(int argc, char* argv[])
         }
 
 /*-----giải phóng window,rendered,....----------*/
-    SDL_DestroyTexture( background );
-    background = NULL;
 //    SDL_DestroyTexture( player1 );
 //    player1 = NULL;
 
@@ -107,5 +107,7 @@ int main(int argc, char* argv[])
     graphics.quitSDL();
     return 0;
 }
+
+
 
 
