@@ -25,7 +25,7 @@ void Player::baby(Graphics &graphics){
     texture=graphics.loadTexture("baby.png");
     SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);// cho playerRect lưu texture player theo chieu rong va cao vao playerRect.w/h
     playerSrc={rect.w/4*0 , 0 , rect.w/4 , rect.h};//x,y,w,h
-    rect={0 , 0 , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 };//x,y,w,h
+    rect={0 , 0 , SCREEN_WIDTH/19 , SCREEN_HEIGHT/11 - 1 };//x,y,w,h
     Fmove = 100.0f;
     Fjump = 0;
 }
@@ -33,7 +33,7 @@ void Player::boy(Graphics &graphics){
     texture=graphics.loadTexture("boy.png");
     SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);// cho playerRect lưu texture player theo chieu rong va cao vao playerRect.w/h
     playerSrc={rect.w/4*0 , 0 , rect.w/4 , rect.h};//x,y,w,h
-    rect={0 , 0 , SCREEN_WIDTH/19-20 , SCREEN_HEIGHT/11 };//x,y,w,h
+    rect={0, 0 , SCREEN_WIDTH/19-20 , SCREEN_HEIGHT/11 - 1 };//x,y,w,h
     Fmove = 160.0f;
     Fjump = 450.0f;
 }
@@ -41,7 +41,7 @@ void Player::old(Graphics &graphics){
     texture=graphics.loadTexture("old.png");
     SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);// cho playerRect lưu texture player theo chieu rong va cao vao playerRect.w/h
     playerSrc={rect.w/4*0 , 0 , rect.w/4 , rect.h};//x,y,w,h
-    rect={0 , 0 , SCREEN_WIDTH/19-20 , SCREEN_HEIGHT/11 };//x,y,w,h
+    rect={1 , 0 , SCREEN_WIDTH/19-20 , SCREEN_HEIGHT/11 -1 };//x,y,w,h
     Fmove = 100.0f;
     Fjump = 0;
 }
@@ -121,7 +121,7 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
                      ((topLeftY < blockBottom && player.y >= blockBottom) ||
                       (topRightY < blockBottom && player.y >= blockBottom)) &&
                      topLeftX < blockRight && topRightX > blockLeft
-                     &&block.value!=4//muốn nhảy lên qua được block có value =4
+                     &&block.value!=4
                      ) {
                 newY = blockBottom; // Đặt nhân vật dưới khối
                 player.vy = 0;
@@ -132,7 +132,7 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
                 ((topRightX > blockLeft && player.x + player.rect.w <= blockLeft) ||
                  (bottomRightX > blockLeft && player.x + player.rect.w <= blockLeft)) &&
                 topRightY < blockBottom && bottomRightY > blockTop
-                &&block.value!=4//muốn nhảy ngang được block có value =4
+                &&block.value!=4
                 ) {
                 newX = blockLeft - player.rect.w; // Đặt nhân vật sát cạnh trái khối
                 player.vx = 0;
@@ -142,7 +142,7 @@ void updatePlayer(Player& player, Block** blocks, float deltaTime, float cameraO
                      ((topLeftX < blockRight && player.x >= blockRight) ||
                       (bottomLeftX < blockRight && player.x >= blockRight)) &&
                      topLeftY < blockBottom && bottomLeftY > blockTop
-                     &&block.value!=4//muốn nhảy ngang qua được block có value =4
+                     &&block.value!=4
                      ) {
                 newX = blockRight; // Đặt nhân vật sát cạnh phải khối
                 player.vx = 0;

@@ -35,7 +35,6 @@
         {
             logErrorAndExit( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
         }
-//        Mix_Init(MIX_INIT_MP3);
     }
 
 
