@@ -35,6 +35,7 @@ git clone link_github_dự_án
   - thêm các khu vực nước, leo thang , hành động bơi
 ```
 # NGUỒN:
-- code học hỏi từ [tài liệu](https://sites.google.com/site/ltncvnu/l%E1%BB%8Bch-h%E1%BB%8Dct%C3%A0i-li%E1%BB%87u) về graphics,music,.. , phần me
+- code học hỏi từ [tài liệu](https://sites.google.com/site/ltncvnu/l%E1%BB%8Bch-h%E1%BB%8Dct%C3%A0i-li%E1%BB%87u) về graphics,music,..
+- học về map từ các video trên youtube
 - có học hỏi AI về phần tương tác nhân vật với các khối
-- ảnh nhân vật và hình nền kiểm trên mạng và tạo bằng canva.com
+- ảnh nhân vật và hình nền kiểm trên mạng và tạo bằng canva.com , nhạc nền [https://opengameart.org/content/menu-music](https://opengameart.org/content/menu-music)
