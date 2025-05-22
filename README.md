@@ -1,6 +1,7 @@
 #  GAME NAME : AGING HEIGHTS
 Đây là một dự án game 2D được phát triển bằng C++ với thư viện SDL2. Dự án được thiết kế để chạy trên Windows với trình biên dịch MinGW.
 ý tưởng trò chơi dựa trên https://www.silvergames.com/en/everything-start-to-fall/gameframe#adtest
+
 TRÌNH BIÊN DỊCH : MinGW
 
 # THƯ VIỆN :
